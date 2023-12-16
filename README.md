@@ -64,15 +64,25 @@ ufw enable
 ufw status
 ```
 ## 四、修改root密码
-Gitlab默认账号用户名为root，密码使用下面命令获得：
-
-登录账户：root
-密码：QfYw3GVeAgQwx/2KW6bLJejwQIZTbBn2dPkfhPX2Pwo=
 
 ```
-#查看第一次安装GitLab生成的默认密码
-cat /etc/gitlab/initial_root_password
-Password: QfYw3GVeAgQwx/2KW6bLJejwQIZTbBn2dPkfhPX2Pwo=
+#切换到相应路径
+cd /opt/gitlab/bin/
+
+#进入控制台
+sudo gitlab-rails console
+
+#查询root用户账号信息并赋值给u
+u=User.find(1)
+
+#设置密码
+u.password='xxxx'
+
+#保存设置
+u.save!
+
+#退出控制台
+exit
 ```
 
 此时访问http://192.168.31.20:2080进行登录并修改密码。因为Gitlab很内存，貌似需要4G多，建议给8G，它启动也有点慢，如果出现502可以耐心等待一下就好啦。
